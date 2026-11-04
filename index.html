@@ -4,73 +4,258 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>إلى مشيرة ❤️</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#3b102b,#8e315e,#e58a9e);color:white;text-align:center;overflow-x:hidden}
-.container{position:relative;z-index:1;width:92%;max-width:650px;margin:35px auto;padding:25px 18px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);border-radius:25px;box-shadow:0 10px 35px rgba(0,0,0,.25);backdrop-filter:blur(10px)}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Tahoma,Arial,sans-serif;
+  background:linear-gradient(135deg,#3b102b,#8e315e,#e58a9e);
+  color:white;
+  text-align:center;
+  overflow-x:hidden
+}
+
+.container{
+  position:relative;
+  z-index:1;
+  width:92%;
+  max-width:650px;
+  margin:35px auto;
+  padding:25px 18px;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:25px;
+  box-shadow:0 10px 35px rgba(0,0,0,.25);
+  backdrop-filter:blur(10px)
+}
+
 h1{font-size:30px;margin-bottom:12px}
 p{line-height:2;font-size:17px}
-input{width:85%;max-width:300px;padding:13px;border:0;border-radius:12px;text-align:center;font-size:17px;margin:12px 0}
-button{border:0;border-radius:25px;padding:12px 25px;margin:8px;background:white;color:#8e315e;font-size:16px;font-weight:bold;cursor:pointer;transition:.3s}
+
+input{
+  width:85%;
+  max-width:300px;
+  padding:13px;
+  border:0;
+  border-radius:12px;
+  text-align:center;
+  font-size:17px;
+  margin:12px 0
+}
+
+button{
+  border:0;
+  border-radius:25px;
+  padding:12px 25px;
+  margin:8px;
+  background:white;
+  color:#8e315e;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.3s
+}
+
 button:hover{transform:scale(1.05);background:#ffe2eb}
 .hidden{display:none!important}
-#story{font-size:19px;line-height:2.2;min-height:100px;white-space:pre-line}
-#couplePhoto{display:block;width:100%;max-width:430px;height:auto;border-radius:20px;margin:20px auto;box-shadow:0 8px 25px rgba(0,0,0,.3)}
-.heart{position:fixed;bottom:-30px;color:#ffb6d0;font-size:22px;pointer-events:none;animation:floatUp 7s linear forwards;z-index:0}
-@keyframes floatUp{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(-110vh) rotate(360deg);opacity:0}}
-#puzzle{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:4px;width:min(90vw,330px);aspect-ratio:1;margin:20px auto;border:4px solid white;border-radius:12px;overflow:hidden;background:white}
-.piece{width:100%;height:100%;background-image:url("couple.jpg");background-size:300% 300%;background-repeat:no-repeat;cursor:pointer;border:1px solid rgba(255,255,255,.5);min-width:0;min-height:0}
-.piece.selected{outline:4px solid #ffe1a8;outline-offset:-4px;opacity:.65}
+
+#story{
+  font-size:19px;
+  line-height:2.2;
+  min-height:100px;
+  white-space:pre-line
+}
+
+#couplePhoto{
+  display:block;
+  width:100%;
+  max-width:430px;
+  height:auto;
+  border-radius:20px;
+  margin:20px auto;
+  box-shadow:0 8px 25px rgba(0,0,0,.3)
+}
+
+.heart{
+  position:fixed;
+  bottom:-30px;
+  color:#ffb6d0;
+  font-size:22px;
+  pointer-events:none;
+  animation:floatUp 7s linear forwards;
+  z-index:0
+}
+
+@keyframes floatUp{
+  0%{transform:translateY(0);opacity:0}
+  15%{opacity:1}
+  100%{transform:translateY(-110vh) rotate(360deg);opacity:0}
+}
+
+#puzzle{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);
+  gap:4px;
+  width:min(90vw,330px);
+  aspect-ratio:1;
+  margin:20px auto;
+  border:4px solid white;
+  border-radius:12px;
+  overflow:hidden;
+  background:white
+}
+
+.piece{
+  width:100%;
+  height:100%;
+  background-image:url("couple.jpg");
+  background-size:300% 300%;
+  background-repeat:no-repeat;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,.5);
+  min-width:0;
+  min-height:0
+}
+
+.piece.selected{
+  outline:4px solid #ffe1a8;
+  outline-offset:-4px;
+  opacity:.65
+}
+
 #puzzleFeedback{display:none;margin:20px auto}
-#puzzleStatus{font-size:21px;font-weight:bold;line-height:2;color:#fff2b5;text-shadow:0 2px 8px rgba(0,0,0,.3)}
-#surpriseButton{display:inline-block;margin:22px auto;background:#ff1744;color:white;font-size:20px;padding:16px 30px;border-radius:30px;box-shadow:0 5px 20px rgba(255,0,50,.5);animation:pulse 1.5s infinite;cursor:pointer}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-#finalMessage{font-size:20px;line-height:2.2;margin-top:20px;white-space:pre-line}
+
+#puzzleStatus{
+  font-size:21px;
+  font-weight:bold;
+  line-height:2;
+  color:#fff2b5;
+  text-shadow:0 2px 8px rgba(0,0,0,.3)
+}
+
+#surpriseButton{
+  display:none;
+  margin:22px auto;
+  background:#ff1744;
+  color:white;
+  font-size:20px;
+  padding:16px 30px;
+  border-radius:30px;
+  box-shadow:0 5px 20px rgba(255,0,50,.5);
+  animation:pulse 1.5s infinite;
+  cursor:pointer
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.06)}
+}
+
+#finalMessage{
+  font-size:20px;
+  line-height:2.2;
+  margin-top:20px;
+  white-space:pre-line
+}
+
 #musicFallback{background:#ffe2eb;color:#702044}
-#heartBurst{position:fixed;inset:0;width:100%;height:100%;overflow:hidden;pointer-events:none;z-index:99999;display:none}
-.burst-heart{position:absolute;left:50%;top:50%;font-size:var(--size);opacity:0;transform:translate(-50%,-50%) scale(.1);animation:heartExplosion 1.8s cubic-bezier(.15,.7,.3,1) forwards;animation-delay:var(--delay);filter:drop-shadow(0 5px 10px rgba(120,0,30,.4))}
-@keyframes heartExplosion{0%{opacity:0;transform:translate(-50%,-50%) translate(0,0) scale(.1)}15%{opacity:1;transform:translate(-50%,-50%) translate(0,0) scale(1.3)}100%{opacity:0;transform:translate(-50%,-50%) translate(var(--x),var(--y)) scale(1) rotate(var(--rotation))}}
+
+#heartBurst{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:99999;
+  display:none
+}
+
+.burst-heart{
+  position:absolute;
+  left:50%;
+  top:50%;
+  font-size:var(--size);
+  opacity:0;
+  transform:translate(-50%,-50%) scale(.1);
+  animation:heartExplosion 1.8s cubic-bezier(.15,.7,.3,1) forwards;
+  animation-delay:var(--delay);
+  filter:drop-shadow(0 5px 10px rgba(120,0,30,.4))
+}
+
+@keyframes heartExplosion{
+  0%{
+    opacity:0;
+    transform:translate(-50%,-50%) translate(0,0) scale(.1)
+  }
+  15%{
+    opacity:1;
+    transform:translate(-50%,-50%) translate(0,0) scale(1.3)
+  }
+  100%{
+    opacity:0;
+    transform:translate(-50%,-50%) translate(var(--x),var(--y)) scale(1) rotate(var(--rotation))
+  }
+}
+
 #ending{animation:endingAppear 1.2s ease forwards}
-@keyframes endingAppear{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+@keyframes endingAppear{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
 </style>
 </head>
+
 <body>
 
 <audio id="music" src="music.mp3" loop preload="auto"></audio>
 
 <div class="container" id="passwordScreen">
-<h1>إلى مشيرة ❤️</h1>
-<p>فيه مفاجأة صغيرة مستنياكي...<br>بس لازم تدخلي كلمة السر الأول 🌹</p>
-<input type="password" id="password" placeholder="كلمة السر" autocomplete="off">
-<br>
-<button onclick="checkPassword()">افتحي المفاجأة ❤️</button>
-<p id="error" style="color:#ffe0e0"></p>
+  <h1>إلى مشيرة ❤️</h1>
+  <p>فيه مفاجأة صغيرة مستنياكي...<br>بس لازم تدخلي كلمة السر الأول 🌹</p>
+  <input type="password" id="password" placeholder="كلمة السر" autocomplete="off">
+  <br>
+  <button type="button" id="passwordButton">افتحي المفاجأة ❤️</button>
+  <p id="error" style="color:#ffe0e0"></p>
 </div>
 
 <div class="container hidden" id="mainScreen">
-<h1>مشيرة ❤️</h1>
-<p>فاكرة إن الحكايات الحلوة بتبدأ إزاي؟<br>أحيانًا بتبدأ من غير ما نخطط لها...</p>
-<div id="story"></div>
-<button id="nextButton" class="hidden" onclick="showPuzzle()">كمّلي المفاجأة ❤️</button>
+  <h1>مشيرة ❤️</h1>
+  <p>فاكرة إن الحكايات الحلوة بتبدأ إزاي؟<br>أحيانًا بتبدأ من غير ما نخطط لها...</p>
 
-<div id="puzzleSection" style="display:none">
-<h2>عندي ليكي تحدي صغير 🧩</h2>
-<p>رتّبي قطع الصورة عشان تشوفي المفاجأة.<br>اختاري قطعتين لتبديل مكانهما.</p>
-<div id="puzzle"></div>
-</div>
+  <div id="story"></div>
 
-<div id="puzzleFeedback">
-<p id="puzzleStatus">اختاري قطعتين من الصورة ❤️</p>
-<button id="surpriseButton" onclick="showEndingWithHearts()">افتحي المفاجأة يا مشيرة ❤️</button>
-</div>
+  <button id="nextButton" class="hidden" type="button">
+    كمّلي المفاجأة ❤️
+  </button>
 
-<div id="ending" style="display:none">
-<h2>وأخيرًا... ❤️</h2>
-<img id="couplePhoto" src="couple.jpg" alt="صورتنا">
-<div id="finalMessage"></div>
-</div>
+  <div id="puzzleSection" style="display:none">
+    <h2>عندي ليكي تحدي صغير 🧩</h2>
+    <p>رتّبي قطع الصورة عشان تشوفي المفاجأة.<br>اختاري قطعتين لتبديل مكانهما.</p>
+    <div id="puzzle"></div>
+  </div>
 
-<button id="musicFallback" class="hidden" onclick="playMusic()">شغّلي الموسيقى 🎵</button>
+  <div id="puzzleFeedback">
+    <p id="puzzleStatus">اختاري قطعتين من الصورة ❤️</p>
+    <button id="surpriseButton" type="button">
+      افتحي المفاجأة يا مشيرة ❤️
+    </button>
+  </div>
+
+  <div id="ending" style="display:none">
+    <h2>وأخيرًا... ❤️</h2>
+    <img id="couplePhoto" src="couple.jpg" alt="صورتنا">
+    <div id="finalMessage"></div>
+  </div>
+
+  <button id="musicFallback" class="hidden" type="button">
+    شغّلي الموسيقى 🎵
+  </button>
 </div>
 
 <div id="heartBurst"></div>
@@ -78,34 +263,17 @@ button:hover{transform:scale(1.05);background:#ffe2eb}
 <script>
 "use strict";
 
-const PASSWORD="badbody";
-const music=document.getElementById("music");
-let storyTimer=null;
-let autoEndingTimer=null;
-let endingMessageTimer=null;
-let currentPieces = []; // مصفوفة لتتبع أماكن القطع بوضوح تםاً
+const PASSWORD = "badbody";
+const music = document.getElementById("music");
 
-function checkPassword(){
-const enteredPassword=document.getElementById("password").value;
-if(enteredPassword===PASSWORD){
-document.getElementById("passwordScreen").style.display="none";
-document.getElementById("mainScreen").classList.remove("hidden");
-playMusic();
-startStory();
-}else{
-document.getElementById("error").textContent="مش دي كلمة السر يا مشيرة 😉";
-}
-}
+let storyTimer = null;
+let endingMessageTimer = null;
+let currentPieces = [];
+let selectedPiece = null;
+let puzzleFinished = false;
+let endingShown = false;
 
-function playMusic(){
-music.play().then(()=>{
-document.getElementById("musicFallback").classList.add("hidden");
-}).catch(()=>{
-document.getElementById("musicFallback").classList.remove("hidden");
-});
-}
-
-const storyText=`يمكن مكنتش أعرف إن يوم عادي ممكن يتحول لحكاية مختلفة...
+const storyText = `يمكن مكنتش أعرف إن يوم عادي ممكن يتحول لحكاية مختلفة...
 
 وإن مكالمة بسيطة ممكن تبقى بداية لحاجة جميلة.
 
@@ -113,203 +281,187 @@ const storyText=`يمكن مكنتش أعرف إن يوم عادي ممكن يت
 ومهما حاولت أوصفلك، هتفضل الكلمات أقل من اللي جوايا.
 أنا مبسوط إنك بقيتي جزء من حكايتي يا مشيرة ❤️`;
 
-function startStory(){
-const story=document.getElementById("story");
-let i=0;
-story.textContent="";
-if(storyTimer)clearInterval(storyTimer);
-storyTimer=setInterval(()=>{
-story.textContent+=storyText.charAt(i);
-i++;
-if(i>=storyText.length){
-clearInterval(storyTimer);
-storyTimer=null;
-document.getElementById("nextButton").classList.remove("hidden");
-}
-},65);
+function checkPassword(){
+  const enteredPassword = document.getElementById("password").value;
+
+  if(enteredPassword === PASSWORD){
+    document.getElementById("passwordScreen").style.display = "none";
+    document.getElementById("mainScreen").classList.remove("hidden");
+    playMusic();
+    startStory();
+  }else{
+    document.getElementById("error").textContent =
+      "مش دي كلمة السر يا مشيرة 😉";
+  }
 }
 
-let selectedPiece=null;
-let puzzleFinished=false;
-let endingShown=false;
+function playMusic(){
+  music.play()
+    .then(()=>{
+      document.getElementById("musicFallback").classList.add("hidden");
+    })
+    .catch(()=>{
+      document.getElementById("musicFallback").classList.remove("hidden");
+    });
+}
+
+function startStory(){
+  const story = document.getElementById("story");
+  let i = 0;
+
+  story.textContent = "";
+
+  if(storyTimer){
+    clearInterval(storyTimer);
+  }
+
+  storyTimer = setInterval(()=>{
+    story.textContent += storyText.charAt(i);
+    i++;
+
+    if(i >= storyText.length){
+      clearInterval(storyTimer);
+      storyTimer = null;
+      document.getElementById("nextButton").classList.remove("hidden");
+    }
+  }, 65);
+}
 
 function showPuzzle(){
-document.getElementById("nextButton").style.display="none";
-document.getElementById("puzzleSection").style.display="block";
-document.getElementById("puzzleFeedback").style.display="block";
-document.getElementById("surpriseButton").style.display="none";
-document.getElementById("ending").style.display="none";
-createPuzzle();
-document.getElementById("puzzleSection").scrollIntoView({behavior:"smooth",block:"center"});
-}
+  document.getElementById("nextButton").style.display = "none";
+  document.getElementById("puzzleSection").style.display = "block";
+  document.getElementById("puzzleFeedback").style.display = "block";
+  document.getElementById("ending").style.display = "none";
 
-function countInversions(arr) {
-let inversions = 0;
-for (let i = 0; i < arr.length - 1; i++) {
-for (let j = i + 1; j < arr.length; j++) {
-if (arr[i] > arr[j]) inversions++;
-}
-}
-return inversions;
+  createPuzzle();
+
+  // إظهار زر المفاجأة بمجرد فتح التحدي.
+  document.getElementById("surpriseButton").style.display = "inline-block";
+
+  document.getElementById("puzzleSection").scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
 }
 
 function createPuzzle(){
-currentPieces=[0,1,2,3,4,5,6,7,8];
+  currentPieces = [0,1,2,3,4,5,6,7,8];
 
-// خلط القطع مع التأكد أنها قابلة للحل وليست مرتبة أصلاً
-do {
-for(let i=currentPieces.length-1; i>0; i--){
-const j=Math.floor(Math.random()*(i+1));
-[currentPieces[i], currentPieces[j]]=[currentPieces[j], currentPieces[i]];
-}
-} while (currentPieces.every((val, idx) => val === idx) || countInversions(currentPieces) % 2 !== 0);
+  // خلط القطع، مع التأكد من أنها ليست مرتبة من البداية.
+  do{
+    for(let i = currentPieces.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [currentPieces[i], currentPieces[j]] =
+        [currentPieces[j], currentPieces[i]];
+    }
+  }while(currentPieces.every((value,index) => value === index));
 
-selectedPiece=null;
-puzzleFinished=false;
-endingShown=false;
+  selectedPiece = null;
+  puzzleFinished = false;
+  endingShown = false;
 
-if(autoEndingTimer){
-clearTimeout(autoEndingTimer);
-autoEndingTimer=null;
-}
-if(endingMessageTimer){
-clearInterval(endingMessageTimer);
-endingMessageTimer=null;
-}
+  if(endingMessageTimer){
+    clearInterval(endingMessageTimer);
+    endingMessageTimer = null;
+  }
 
-renderPuzzle();
-document.getElementById("puzzleStatus").textContent="اختاري قطعتين لتبديل مكانهما ❤️";
-document.getElementById("surpriseButton").style.display="none";
+  renderPuzzle();
+
+  document.getElementById("puzzleStatus").textContent =
+    "اختاري قطعتين لتبديل مكانهما ❤️";
 }
 
 function renderPuzzle(){
-const puzzle=document.getElementById("puzzle");
-puzzle.innerHTML="";
+  const puzzle = document.getElementById("puzzle");
+  puzzle.innerHTML = "";
 
-currentPieces.forEach((pieceNumber,index)=>{
-const piece=document.createElement("div");
-piece.className="piece";
-const row=Math.floor(pieceNumber/3);
-const col=pieceNumber%3;
-piece.style.backgroundPosition=`${col*50}% ${row*50}%`;
+  currentPieces.forEach((pieceNumber,index)=>{
+    const piece = document.createElement("div");
+    piece.className = "piece";
 
+    const row = Math.floor(pieceNumber / 3);
+    const col = pieceNumber % 3;
 
-if(selectedPiece === index) {
-piece.classList.add("selected");
-}
+    piece.style.backgroundPosition = `${col * 50}% ${row * 50}%`;
 
-piece.addEventListener("click",()=>selectPiece(index));
-puzzle.appendChild(piece);
-});
+    if(selectedPiece === index){
+      piece.classList.add("selected");
+    }
+
+    piece.addEventListener("click",()=>selectPiece(index));
+    puzzle.appendChild(piece);
+  });
 }
 
 function selectPiece(index){
-if(puzzleFinished||endingShown)return;
+  if(puzzleFinished || endingShown) return;
 
-if(selectedPiece===null){
-selectedPiece=index;
-renderPuzzle();
-return;
-}
+  if(selectedPiece === null){
+    selectedPiece = index;
+    renderPuzzle();
+    return;
+  }
 
-if(selectedPiece===index){
-selectedPiece=null;
-renderPuzzle();
-return;
-}
+  if(selectedPiece === index){
+    selectedPiece = null;
+    renderPuzzle();
+    return;
+  }
 
-// تبديل الأماكن في المصفوفة
-let temp=currentPieces[selectedPiece];
-currentPieces[selectedPiece]=currentPieces[index];
-currentPieces[index]=temp;
+  const temp = currentPieces[selectedPiece];
+  currentPieces[selectedPiece] = currentPieces[index];
+  currentPieces[index] = temp;
 
-selectedPiece=null;
-renderPuzzle();
-checkPuzzleSolved();
+  selectedPiece = null;
+  renderPuzzle();
+  checkPuzzleSolved();
 }
 
 function checkPuzzleSolved(){
-const solved=currentPieces.every((val, idx) => val === idx);
+  const solved = currentPieces.every((value,index) => value === index);
 
-if(!solved || puzzleFinished || endingShown) return;
+  if(!solved || puzzleFinished || endingShown) return;
 
-puzzleFinished=true;
+  puzzleFinished = true;
 
-const status=document.getElementById("puzzleStatus");
-const button=document.getElementById("surpriseButton");
+  document.getElementById("puzzleStatus").textContent =
+    "برافو يا مشيرة! عرفتي تحليها ❤️";
 
-status.textContent="برافو يا مشيرة! عرفتي تحليها ❤️";
-button.style.display="inline-block";
-
-document.getElementById("puzzleFeedback").scrollIntoView({behavior:"smooth",block:"center"});
-
-autoEndingTimer=setTimeout(()=>{
-showEndingWithHearts();
-},4000);
+  // يظل زر المفاجأة ظاهرًا بعد حل اللغز أيضًا.
+  document.getElementById("surpriseButton").style.display = "inline-block";
 }
 
 function showEndingWithHearts(){
-if(endingShown)return;
-endingShown=true;
+  if(endingShown) return;
 
-if(autoEndingTimer){
-clearTimeout(autoEndingTimer);
-autoEndingTimer=null;
-}
+  endingShown = true;
 
-document.getElementById("puzzleFeedback").style.display="none";
-document.getElementById("puzzleSection").style.display="none";
+  document.getElementById("puzzleFeedback").style.display = "none";
+  document.getElementById("puzzleSection").style.display = "none";
 
-showEnding();
+  showEnding();
 
-try{
-launchHeartBurst();
-}catch(error){
-console.error("Heart animation error:",error);
-}
-}
-
-function launchHeartBurst(){
-const burst=document.getElementById("heartBurst");
-burst.innerHTML="";
-burst.style.display="block";
-
-for(let i=0;i<55;i++){
-const heart=document.createElement("div");
-heart.className="burst-heart";
-heart.textContent="❤️";
-const angle=Math.random()*Math.PI*2;
-const distance=100+Math.random()*400;
-const x=Math.cos(angle)*distance;
-const y=Math.sin(angle)*distance;
-heart.style.setProperty("--x",x+"px");
-heart.style.setProperty("--y",y+"px");
-heart.style.setProperty("--size",(45+Math.random()*65)+"px");
-heart.style.setProperty("--delay",Math.random()*.3+"s");
-heart.style.setProperty("--rotation",(Math.random()*180-90)+"deg");
-burst.appendChild(heart);
-}
-
-setTimeout(()=>{
-burst.style.display="none";
-burst.innerHTML="";
-},3000);
+  try{
+    launchHeartBurst();
+  }catch(error){
+    console.error("Heart animation error:",error);
+  }
 }
 
 function showEnding(){
-const ending=document.getElementById("ending");
-const photo=document.getElementById("couplePhoto");
-const target=document.getElementById("finalMessage");
+  const ending = document.getElementById("ending");
+  const photo = document.getElementById("couplePhoto");
+  const target = document.getElementById("finalMessage");
 
-ending.style.display="block";
-ending.style.animation="none";
-ending.offsetHeight;
-ending.style.animation="endingAppear 1.2s ease forwards";
+  ending.style.display = "block";
+  ending.style.animation = "none";
+  ending.offsetHeight;
+  ending.style.animation = "endingAppear 1.2s ease forwards";
 
-photo.src="couple.jpg";
-photo.style.display="block";
+  photo.src = "couple.jpg";
+  photo.style.display = "block";
 
-const message=`مشيرة...
+  const message = `مشيرة...
 
 يمكن أجمل حاجة في الحكاية دي
 إني لقيت حد نفسي أشاركه تفاصيل أيامي.
@@ -323,37 +475,92 @@ const message=`مشيرة...
 
 بحبك يا مشيرة ❤️`;
 
-target.style.display="block";
-target.textContent="";
-let i=0;
+  target.style.display = "block";
+  target.textContent = "";
 
-if(endingMessageTimer)clearInterval(endingMessageTimer);
+  let i = 0;
 
-endingMessageTimer=setInterval(()=>{
-target.textContent+=message.charAt(i);
-i++;
-if(i>=message.length){
-clearInterval(endingMessageTimer);
-endingMessageTimer=null;
+  if(endingMessageTimer){
+    clearInterval(endingMessageTimer);
+  }
+
+  endingMessageTimer = setInterval(()=>{
+    target.textContent += message.charAt(i);
+    i++;
+
+    if(i >= message.length){
+      clearInterval(endingMessageTimer);
+      endingMessageTimer = null;
+    }
+  }, 75);
+
+  setTimeout(()=>{
+    ending.scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+  }, 200);
 }
-},75);
 
-setTimeout(()=>{
-ending.scrollIntoView({behavior:"smooth",block:"center"});
-},200);
+function launchHeartBurst(){
+  const burst = document.getElementById("heartBurst");
+  burst.innerHTML = "";
+  burst.style.display = "block";
+
+  for(let i = 0; i < 55; i++){
+    const heart = document.createElement("div");
+    heart.className = "burst-heart";
+    heart.textContent = "❤️";
+
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 100 + Math.random() * 400;
+
+    heart.style.setProperty("--x", Math.cos(angle) * distance + "px");
+    heart.style.setProperty("--y", Math.sin(angle) * distance + "px");
+    heart.style.setProperty("--size", 45 + Math.random() * 65 + "px");
+    heart.style.setProperty("--delay", Math.random() * 0.3 + "s");
+    heart.style.setProperty(
+      "--rotation",
+      Math.random() * 180 - 90 + "deg"
+    );
+
+    burst.appendChild(heart);
+  }
+
+  setTimeout(()=>{
+    burst.style.display = "none";
+    burst.innerHTML = "";
+  }, 3000);
 }
 
 function createHeart(){
-const heart=document.createElement("div");
-heart.className="heart";
-heart.textContent=["❤️","💕","💗","💖","🌹"][Math.floor(Math.random()*5)];
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(5+Math.random()*5)+"s";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),10000);
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent =
+    ["❤️","💕","💗","💖","🌹"][Math.floor(Math.random() * 5)];
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(), 10000);
 }
+
+// ربط الأزرار بالدوال.
+document.getElementById("passwordButton")
+  .addEventListener("click",checkPassword);
+
+document.getElementById("nextButton")
+  .addEventListener("click",showPuzzle);
+
+document.getElementById("surpriseButton")
+  .addEventListener("click",showEndingWithHearts);
+
+document.getElementById("musicFallback")
+  .addEventListener("click",playMusic);
 
 setInterval(createHeart,650);
 </script>
+
 </body>
 </html>
