@@ -7,570 +7,348 @@
 <title>إلى مشيرة ❤️</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
     min-height: 100vh;
     font-family: Tahoma, Arial, sans-serif;
-    color: white;
+    background: linear-gradient(135deg,#ffe0e9,#fff0f4,#ffd1dc);
+    color: #713047;
     text-align: center;
-    background: linear-gradient(135deg, #4b102b, #a32651, #e85d75);
     overflow-x: hidden;
 }
 
 .container {
     width: 92%;
-    max-width: 650px;
+    max-width: 520px;
     margin: auto;
-    padding: 35px 15px;
+    padding: 35px 10px;
 }
 
-h1 {
-    font-size: 30px;
-    color: #ffe2e9;
-}
+h1 { color: #c2185b; }
 
 p {
-    line-height: 2;
     font-size: 17px;
+    line-height: 2;
 }
 
-input {
-    width: 85%;
-    max-width: 300px;
-    padding: 13px;
-    border: none;
+.card {
+    background: rgba(255,255,255,.9);
     border-radius: 25px;
-    text-align: center;
-    font-size: 17px;
-    margin: 12px;
+    padding: 25px 18px;
+    margin-top: 20px;
+    box-shadow: 0 8px 30px rgba(160,40,80,.13);
 }
 
 button {
     border: none;
     border-radius: 30px;
-    padding: 13px 25px;
-    margin: 12px auto;
+    padding: 14px 25px;
+    background: #e91e63;
+    color: white;
     font-size: 17px;
-    font-weight: bold;
-    color: #8b1741;
-    background: #ffe1e9;
     cursor: pointer;
-    box-shadow: 0 4px 15px #400c2b55;
-    transition: transform .2s, background .2s;
-}
-
-button:active {
-    transform: scale(.95);
-}
-
-button:hover {
-    background: white;
-}
-
-.hidden {
-    display: none !important;
-}
-
-#story {
-    min-height: 130px;
-    padding: 15px;
-    font-size: 19px;
-    line-height: 2.2;
+    margin: 12px 5px;
 }
 
 #puzzle {
-    width: min(90vw, 390px);
-    height: min(90vw, 390px);
-    margin: 25px auto;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 4px;
-    padding: 5px;
-    border-radius: 15px;
-    background: #ffe4ec;
-    box-shadow: 0 5px 25px #35091f88;
+    grid-template-columns: repeat(3,1fr);
+    gap: 5px;
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 1;
+    margin: 20px auto;
 }
 
-.piece {
-    border: 2px solid #fff0f5;
-    border-radius: 7px;
-    padding: 0;
-    margin: 0;
-    min-width: 0;
-    min-height: 0;
+.tile {
+    border-radius: 9px;
     background-image: url("couple.jpg");
     background-size: 300% 300%;
-    background-repeat: no-repeat;
     cursor: pointer;
-    box-shadow: none;
+    border: 2px solid white;
 }
 
-.piece.selected {
-    border: 4px solid #ffcf42;
-    transform: scale(.96);
+.tile.selected {
+    border: 4px solid #e91e63;
+    transform: scale(.94);
 }
 
-#puzzleFeedback {
-    margin-top: 20px;
-    padding: 15px;
-    background: #ffffff22;
-    border-radius: 15px;
-}
-
-#puzzleFeedback h2 {
-    color: #ffe2a8;
-}
-
-#surpriseButton {
-    font-size: 19px;
-    background: #fff0a8;
-    color: #9b1747;
-    padding: 16px 30px;
-    animation: pulse 1.2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.06); }
-}
-
-#ending {
-    padding: 20px 5px;
-    animation: fadeIn 1.5s ease;
+#success, #surpriseButton, #ending {
+    display: none;
 }
 
 #ending img {
-    width: 90%;
-    max-width: 420px;
+    width: 100%;
     border-radius: 20px;
-    border: 4px solid #ffe1e9;
-    box-shadow: 0 5px 30px #35091f99;
+    margin-top: 15px;
 }
 
-#endingMessage {
-    font-size: 21px;
-    line-height: 2.2;
-    color: #fff0d7;
-    white-space: pre-line;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-#heartLayer {
+.heart {
     position: fixed;
-    inset: 0;
-    overflow: hidden;
+    color: #e60045;
+    font-size: 65px;
     pointer-events: none;
-    z-index: 9999;
-}
-
-.flying-heart {
-    position: absolute;
-    bottom: -100px;
-    animation: heartFly var(--duration) ease-out forwards;
-    filter: drop-shadow(0 3px 7px #50001c88);
-    will-change: transform, opacity;
+    animation: heartFly 3s ease-out forwards;
+    z-index: 999;
 }
 
 @keyframes heartFly {
     0% {
-        transform: translate(0, 0) scale(.3) rotate(0deg);
+        transform: translateY(100vh) scale(.4);
         opacity: 0;
     }
-    15% {
-        opacity: 1;
-        transform: translate(0, -15vh) scale(1.2) rotate(15deg);
-    }
+    20% { opacity: 1; }
     100% {
-        transform: translate(var(--dx), -115vh) scale(1.7) rotate(var(--rot));
+        transform: translateY(-20vh) scale(1.5) rotate(35deg);
         opacity: 0;
     }
 }
 
-.small-heart {
-    position: fixed;
-    top: -30px;
-    color: #ffb4c8;
-    font-size: 20px;
-    pointer-events: none;
-    animation: fall 7s linear infinite;
-    z-index: 0;
+@keyframes appear {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fall {
-    to {
-        transform: translateY(110vh) rotate(360deg);
-    }
+.small {
+    font-size: 14px;
+    color: #a45b73;
 }
 
+#musicButton {
+    background: #ad1457;
+    font-size: 14px;
+}
 </style>
 </head>
 
 <body>
 
-<div id="heartLayer"></div>
-
 <div class="container">
 
-    <section id="passwordScreen">
-        <h1>إلى مشيرة ❤️</h1>
-        <p>فيه حاجة صغيرة مستنياكي...</p>
-        <p>بس الأول، كلمة السر؟ 🔐</p>
+    <h1>إلى مشيرة ❤️</h1>
 
-        <input id="passwordInput" type="password"
-               placeholder="اكتبي كلمة السر">
-
-        <br>
-
-        <button id="loginButton">افتحي ❤️</button>
-
-        <p id="passwordError" class="hidden">
-            مش دي كلمة السر يا مشيرة 🥺
-        </p>
-    </section>
-
-    <section id="intro" class="hidden">
-        <h1>أهلًا يا مشيرة ❤️</h1>
-        <div id="story"></div>
-        <button id="continueButton" class="hidden">
-            كمّلي المفاجأة ❤️
-        </button>
-    </section>
-
-    <section id="puzzleSection" class="hidden">
-        <h1>عندي ليكي تحدي صغير 🧩</h1>
+    <div class="card">
         <p>
-            رتبي الصورة عن طريق اختيار قطعتين وتبديل أماكنهما،
-            لحد ما الصورة تكتمل ❤️
+            عمرك تخيلتي إن مكالمة عادية ممكن تكون بداية
+            لحاجة جميلة بالشكل ده؟
         </p>
+
+        <p>
+            أنا مكنتش متوقع إن مكالمة يحصل بعدها كل
+            الحاجات الحلوة ديه...
+            ولا كنت متخيل إن شخص ممكن يدخل حياتي
+            بالصدفة ويبقى له المكانة دي كلها.
+        </p>
+
+        <p>
+            بس يمكن أجمل الحاجات في حياتنا هي اللي
+            مبتكونش في الحسبان ❤️
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>عندي ليكي تحدي صغير 🧩</h2>
+        <p>ركبي صورتنا عشان توصلي للمفاجأة ❤️</p>
 
         <div id="puzzle"></div>
 
-        <p id="puzzleStatus">اختاري قطعتين لتبديل مكانهما</p>
+        <p class="small">
+            اضغطي على قطعتين لتبديل مكانهما حتى تكتمل الصورة.
+        </p>
 
-        <div id="puzzleFeedback" class="hidden">
+        <div id="success">
             <h2>برافو يا مشيرة! ❤️</h2>
-            <p>عرفتي تحلي اللغز... بس لسه فيه مفاجأة مستنياكي 🥰</p>
-
-            <button id="surpriseButton">
-                افتحي المفاجأة ❤️
-            </button>
+            <p>عرفتي تجمعي الصورة... ودلوقتي دور المفاجأة.</p>
         </div>
-    </section>
 
-    <section id="ending" class="hidden">
-        <h1>المفاجأة ليكي يا مشيرة ❤️</h1>
+        <button id="surpriseButton" onclick="openSurprise()">
+            افتحي المفاجأة يا مشيرة ❤️
+        </button>
+    </div>
 
-        <img src="couple.jpg" alt="صورة جميلة">
+    <div class="card" id="ending">
+        <h1>المفاجأة ❤️</h1>
 
-        <div id="endingMessage">
-            مشيرة...
+        <p>
+            يمكن أنا مكنتش مخطط إن كل ده يحصل،
+            ويمكن مكنتش متوقع إن مكالمة واحدة
+            تكون بداية لكل اللحظات الجميلة دي.
+        </p>
 
-            يمكن الكلام مش دايمًا بيعرف يوصف اللي جوانا،
-            بس أنا حبيت أعمل حاجة صغيرة مخصوص ليكي.
+        <p>
+            لكن أنا سعيد إن الصدفة دي جمعتني بيكي،
+            وسعيد بكل لحظة حلوة عشناها سوا.
+        </p>
 
-            وجودك خلّى لحظات كتير مختلفة وأجمل.
+        <p>
+            مش عارف المستقبل مخبيلنا إيه،
+            بس عارف إن وجودك في حياتي بقى حاجة
+            جميلة ومميزة بالنسبالي.
+        </p>
 
-            أتمنى تفضلي دايمًا مبسوطة،
-            وتفضلي عارفة إنك غالية عندي جدًا.
+        <p>
+            أتمنى نفضل نخلق ذكريات حلوة كتير،
+            ونفضل نضحك ونفرح ونكون سبب سعادة بعض.
+        </p>
 
-            بحبك ❤️
-        </div>
-    </section>
+        <h2>بحبك يا مشيرة ❤️</h2>
+
+        <img src="couple.jpg" alt="Our picture">
+
+        <p>ومن هنا تبدأ حكايتنا الجميلة... ❤️</p>
+    </div>
+
+    <button id="musicButton" onclick="toggleMusic()">
+        🎵 تشغيل الموسيقى
+    </button>
+
+    <audio id="music" loop preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
 </div>
 
-<audio id="music" src="music.mp3" loop></audio>
-
 <script>
-"use strict";
-
-/* العناصر الأساسية */
-
-const passwordScreen = document.getElementById("passwordScreen");
-const intro = document.getElementById("intro");
-const puzzleSection = document.getElementById("puzzleSection");
+const puzzle = document.getElementById("puzzle");
+const success = document.getElementById("success");
+const surpriseButton = document.getElementById("surpriseButton");
 const ending = document.getElementById("ending");
 
-const passwordInput = document.getElementById("passwordInput");
-const passwordError = document.getElementById("passwordError");
-const loginButton = document.getElementById("loginButton");
-
-const story = document.getElementById("story");
-const continueButton = document.getElementById("continueButton");
-
-const puzzle = document.getElementById("puzzle");
-const puzzleStatus = document.getElementById("puzzleStatus");
-const puzzleFeedback = document.getElementById("puzzleFeedback");
-const surpriseButton = document.getElementById("surpriseButton");
-
-const music = document.getElementById("music");
-const heartLayer = document.getElementById("heartLayer");
-
-let tiles = [];
-let selectedPosition = null;
-let puzzleFinished = false;
-let endingShown = false;
-
-/* تشغيل الموسيقى */
-
-function playMusic() {
-    music.play().catch(() => {});
-}
-
-/* كلمة السر */
-
-function checkPassword() {
-    if (passwordInput.value.trim() === "badbody") {
-        passwordScreen.classList.add("hidden");
-        intro.classList.remove("hidden");
-
-        playMusic();
-        startStory();
-    } else {
-        passwordError.classList.remove("hidden");
-    }
-}
-
-loginButton.addEventListener("click", checkPassword);
-
-passwordInput.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-        checkPassword();
-    }
-});
-
-/* القصة */
-
-const storyText =
-"يا مشيرة ❤️\n\n" +
-"كنت عايز أعملك حاجة مختلفة شوية...\n" +
-"حاجة صغيرة فيها صورة وذكريات ومفاجأة.\n" +
-"بس قبل المفاجأة، عندي تحدي صغير ليكي.\n" +
-"مستعدة؟ 🥰";
-
-function startStory() {
-    let i = 0;
-    story.textContent = "";
-
-    const timer = setInterval(function() {
-        if (i < storyText.length) {
-            story.textContent += storyText.charAt(i);
-            i++;
-        } else {
-            clearInterval(timer);
-            continueButton.classList.remove("hidden");
-        }
-    }, 65);
-}
-
-continueButton.addEventListener("click", function() {
-    intro.classList.add("hidden");
-    puzzleSection.classList.remove("hidden");
-
-    createPuzzle();
-});
-
-/* إنشاء اللغز */
+let tiles = [0,1,2,3,4,5,6,7,8];
+let selected = null;
+let solved = false;
 
 function shuffleTiles() {
-    let arr = [0,1,2,3,4,5,6,7,8];
-
     do {
-        for (let i = arr.length - 1; i > 0; i--) {
+        for (let i = tiles.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
+            [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
         }
-    } while (arr.every((value, index) => value === index));
-
-    return arr;
-}
-
-function createPuzzle() {
-    tiles = shuffleTiles();
-    selectedPosition = null;
-    puzzleFinished = false;
-    endingShown = false;
-
-    puzzleFeedback.classList.add("hidden");
-    puzzleStatus.textContent = "اختاري قطعتين لتبديل مكانهما";
-
-    renderPuzzle();
+    } while (tiles.every((v, i) => v === i));
 }
 
 function renderPuzzle() {
     puzzle.innerHTML = "";
 
-    tiles.forEach(function(pieceNumber, position) {
-        const piece = document.createElement("button");
+    tiles.forEach((tile, index) => {
+        const element = document.createElement("div");
+        element.className = "tile";
 
-        piece.type = "button";
-        piece.className = "piece";
-        piece.dataset.position = position;
-        piece.setAttribute("aria-label", "قطعة " + (position + 1));
+        const row = Math.floor(tile / 3);
+        const col = tile % 3;
 
-        const row = Math.floor(pieceNumber / 3);
-        const col = pieceNumber % 3;
-
-        piece.style.backgroundPosition =
+        element.style.backgroundPosition =
             (col * 50) + "% " + (row * 50) + "%";
 
-        if (selectedPosition === position) {
-            piece.classList.add("selected");
+        if (selected === index) {
+            element.classList.add("selected");
         }
 
-        puzzle.appendChild(piece);
+        element.onclick = () => selectTile(index);
+        puzzle.appendChild(element);
     });
 }
 
-/* اختيار القطع وتبديلها */
+function selectTile(index) {
+    if (solved) return;
 
-puzzle.addEventListener("click", function(event) {
-    const piece = event.target.closest(".piece");
-
-    if (!piece || puzzleFinished) return;
-
-    const position = Number(piece.dataset.position);
-
-    if (selectedPosition === null) {
-        selectedPosition = position;
+    if (selected === null) {
+        selected = index;
         renderPuzzle();
-        puzzleStatus.textContent = "اختاري القطعة الثانية ❤️";
         return;
     }
 
-    if (selectedPosition === position) {
-        selectedPosition = null;
+    if (selected === index) {
+        selected = null;
         renderPuzzle();
-        puzzleStatus.textContent = "اختاري قطعتين لتبديل مكانهما";
         return;
     }
 
-    const first = selectedPosition;
+    [tiles[selected], tiles[index]] =
+        [tiles[index], tiles[selected]];
 
-    [tiles[first], tiles[position]] =
-        [tiles[position], tiles[first]];
-
-    selectedPosition = null;
-
+    selected = null;
     renderPuzzle();
-    checkPuzzleSolved();
-});
-
-/* التأكد من اكتمال اللغز */
-
-function checkPuzzleSolved() {
-    const solved = tiles.every(function(value, index) {
-        return value === index;
-    });
-
-    if (!solved) {
-        puzzleStatus.textContent = "كمّلي يا مشيرة، قربتي ❤️";
-        return;
-    }
-
-    puzzleFinished = true;
-
-    puzzleStatus.textContent = "الصورة اكتملت! ❤️";
-
-    puzzleFeedback.classList.remove("hidden");
-
-    puzzleFeedback.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
+    checkSolved();
 }
 
-/* فتح المفاجأة يدويًا فقط */
+function checkSolved() {
+    const isCorrect = tiles.every((value, index) =>
+        value === index
+    );
 
-surpriseButton.addEventListener("click", function() {
-    if (!puzzleFinished || endingShown) return;
+    if (isCorrect && !solved) {
+        solved = true;
 
-    endingShown = true;
+        success.style.display = "block";
+        success.style.animation = "appear 1s ease";
 
-    puzzleSection.classList.add("hidden");
-    ending.classList.remove("hidden");
+        surpriseButton.style.display = "inline-block";
+        surpriseButton.style.animation = "appear 1s ease";
 
-    launchHeartBurst();
+        launchHearts();
+        playMusic();
+    }
+}
+
+function launchHearts() {
+    for (let i = 0; i < 35; i++) {
+        setTimeout(() => {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤️";
+
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize =
+                (40 + Math.random() * 55) + "px";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 3200);
+        }, i * 100);
+    }
+}
+
+function openSurprise() {
+    if (!solved) return;
+
+    ending.style.display = "block";
+    ending.style.animation = "appear 1.5s ease";
+
+    launchHearts();
 
     ending.scrollIntoView({
         behavior: "smooth",
-        block: "start"
+        block: "center"
     });
 
     playMusic();
-});
-
-/* انفجار القلوب الحمراء */
-
-function launchHeartBurst() {
-    heartLayer.innerHTML = "";
-
-    const heartCount = 55;
-
-    for (let i = 0; i < heartCount; i++) {
-        const heart = document.createElement("span");
-
-        heart.className = "flying-heart";
-        heart.textContent = "❤️";
-
-        heart.style.left = (Math.random() * 100) + "vw";
-
-        heart.style.fontSize =
-            (35 + Math.random() * 65) + "px";
-
-        heart.style.setProperty(
-            "--dx",
-            (Math.random() * 350 - 175) + "px"
-        );
-
-        heart.style.setProperty(
-            "--rot",
-            (Math.random() * 720 - 360) + "deg"
-        );
-
-        heart.style.setProperty(
-            "--duration",
-            (3 + Math.random() * 3) + "s"
-        );
-
-        heart.style.animationDelay =
-            (Math.random() * 1.2) + "s";
-
-        heartLayer.appendChild(heart);
-    }
-
-    setTimeout(function() {
-        heartLayer.innerHTML = "";
-    }, 7500);
 }
 
-/* قلوب صغيرة متساقطة في الخلفية */
+const music = document.getElementById("music");
+const musicButton = document.getElementById("musicButton");
 
-function createBackgroundHearts() {
-    for (let i = 0; i < 15; i++) {
-        const heart = document.createElement("div");
+function playMusic() {
+    music.play().then(() => {
+        musicButton.innerHTML = "⏸ إيقاف الموسيقى";
+    }).catch(() => {
+        musicButton.innerHTML = "🎵 اضغطي هنا لتشغيل الموسيقى";
+    });
+}
 
-        heart.className = "small-heart";
-        heart.textContent = "♥";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDelay = Math.random() * 7 + "s";
-        heart.style.animationDuration = (5 + Math.random() * 6) + "s";
-
-        document.body.appendChild(heart);
+function toggleMusic() {
+    if (music.paused) {
+        playMusic();
+    } else {
+        music.pause();
+        musicButton.innerHTML = "🎵 تشغيل الموسيقى";
     }
 }
 
-createBackgroundHearts();
-
+shuffleTiles();
+renderPuzzle();
 </script>
 
 </body>
