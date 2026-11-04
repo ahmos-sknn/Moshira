@@ -143,7 +143,6 @@ button:hover {
     background-repeat: no-repeat;
     cursor: pointer;
     border: 1px solid rgba(255,255,255,0.5);
-    transition: opacity 0.2s;
     min-width: 0;
     min-height: 0;
 }
@@ -173,7 +172,7 @@ button:hover {
 
 <audio id="music" src="music.mp3" loop preload="auto"></audio>
 
-<!-- Password Screen -->
+<!-- Password -->
 
 <div class="container" id="passwordScreen">
 
@@ -202,7 +201,7 @@ button:hover {
 
 </div>
 
-<!-- Main Screen -->
+<!-- Main -->
 
 <div class="container hidden" id="mainScreen">
 
@@ -226,7 +225,7 @@ button:hover {
 
     <!-- Puzzle -->
 
-    <div id="puzzleSection" class="hidden">
+    <div id="puzzleSection" style="display:none;">
 
         <h2>عندي ليكي تحدي صغير 🧩</h2>
 
@@ -246,7 +245,7 @@ button:hover {
 
     <!-- Ending -->
 
-    <div id="ending" class="hidden">
+    <div id="ending" style="display:none;">
 
         <h2>وأخيرًا... ❤️</h2>
 
@@ -284,11 +283,9 @@ function checkPassword() {
 
     if (enteredPassword === PASSWORD) {
 
-        document.getElementById("passwordScreen")
-            .classList.add("hidden");
+        document.getElementById("passwordScreen").style.display = "none";
 
-        document.getElementById("mainScreen")
-            .classList.remove("hidden");
+        document.getElementById("mainScreen").classList.remove("hidden");
 
         playMusic();
         startStory();
@@ -306,13 +303,11 @@ function playMusic() {
 
     music.play().then(() => {
 
-        document.getElementById("musicFallback")
-            .classList.add("hidden");
+        document.getElementById("musicFallback").classList.add("hidden");
 
     }).catch(() => {
 
-        document.getElementById("musicFallback")
-            .classList.remove("hidden");
+        document.getElementById("musicFallback").classList.remove("hidden");
 
     });
 
@@ -342,15 +337,13 @@ function startStory() {
     const timer = setInterval(() => {
 
         story.textContent += storyText.charAt(i);
-
         i++;
 
         if (i >= storyText.length) {
 
             clearInterval(timer);
 
-            document.getElementById("nextButton")
-                .classList.remove("hidden");
+            document.getElementById("nextButton").classList.remove("hidden");
 
         }
 
@@ -362,23 +355,22 @@ function startStory() {
 
 function showPuzzle() {
 
-    document.getElementById("nextButton")
-        .classList.add("hidden");
+    document.getElementById("nextButton").style.display = "none";
 
-    document.getElementById("puzzleSection")
-        .classList.remove("hidden");
+    document.getElementById("puzzleSection").style.display = "block";
+
+    document.getElementById("ending").style.display = "none";
 
     createPuzzle();
 
-    document.getElementById("puzzleSection")
-        .scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
+    document.getElementById("puzzleSection").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
 
 }
 
-// Puzzle game
+// Puzzle
 
 let pieces = [];
 let selectedPiece = null;
@@ -392,7 +384,7 @@ function createPuzzle() {
 
     pieces = [0,1,2,3,4,5,6,7,8];
 
-    // Shuffle pieces
+    // Shuffle
 
     do {
 
@@ -400,14 +392,11 @@ function createPuzzle() {
 
             const j = Math.floor(Math.random() * (i + 1));
 
-            [pieces[i], pieces[j]] =
-                [pieces[j], pieces[i]];
+            [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
 
         }
 
-    } while (
-        pieces.every((value, index) => value === index)
-    );
+    } while (pieces.every((value, index) => value === index));
 
     selectedPiece = null;
     puzzleFinished = false;
@@ -423,9 +412,7 @@ function createPuzzle() {
         setPieceImage(piece, pieceNumber);
 
         piece.addEventListener("click", () => {
-
             selectPiece(index);
-
         });
 
         puzzle.appendChild(piece);
@@ -437,8 +424,6 @@ function createPuzzle() {
 
 }
 
-// Set correct image position
-
 function setPieceImage(element, number) {
 
     const row = Math.floor(number / 3);
@@ -449,14 +434,13 @@ function setPieceImage(element, number) {
 
 }
 
-// Select and swap pieces
+// Select pieces
 
 function selectPiece(index) {
 
     if (puzzleFinished) return;
 
-    const allPieces =
-        document.querySelectorAll("#puzzle .piece");
+    const allPieces = document.querySelectorAll("#puzzle .piece");
 
     if (selectedPiece === null) {
 
@@ -470,8 +454,6 @@ function selectPiece(index) {
 
     const first = selectedPiece;
     const second = index;
-
-    // Swap
 
     [pieces[first], pieces[second]] =
         [pieces[second], pieces[first]];
@@ -488,8 +470,7 @@ function selectPiece(index) {
 
 function updatePuzzle() {
 
-    const allPieces =
-        document.querySelectorAll("#puzzle .piece");
+    const allPieces = document.querySelectorAll("#puzzle .piece");
 
     allPieces.forEach((piece, index) => {
 
@@ -509,9 +490,7 @@ function updatePuzzle() {
 
 function checkPuzzleSolved() {
 
-    const solved = pieces.every(
-        (number, index) => number === index
-    );
+    const solved = pieces.every((number, index) => number === index);
 
     if (solved && !puzzleFinished) {
 
@@ -530,18 +509,20 @@ function checkPuzzleSolved() {
 
 function showEnding() {
 
-    document.getElementById("puzzleSection")
-        .classList.add("hidden");
-
+    const puzzleSection = document.getElementById("puzzleSection");
     const ending = document.getElementById("ending");
+    const photo = document.getElementById("couplePhoto");
+    const target = document.getElementById("finalMessage");
 
-    ending.classList.remove("hidden");
+    // Hide puzzle and show ending
+    puzzleSection.style.display = "none";
+    ending.style.display = "block";
 
-    ending.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
+    // Make sure photo is visible
+    photo.style.display = "block";
+    photo.src = "couple.jpg";
 
+    // Final message
     const message =
 `مشيرة...
 
@@ -557,9 +538,7 @@ function showEnding() {
 
 بحبك يا مشيرة ❤️`;
 
-    const target =
-        document.getElementById("finalMessage");
-
+    target.style.display = "block";
     target.textContent = "";
 
     let i = 0;
@@ -571,12 +550,15 @@ function showEnding() {
         i++;
 
         if (i >= message.length) {
-
             clearInterval(timer);
-
         }
 
     }, 75);
+
+    ending.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
 
 }
 
@@ -593,8 +575,7 @@ function createHeart() {
             Math.floor(Math.random() * 5)
         ];
 
-    heart.style.left =
-        Math.random() * 100 + "vw";
+    heart.style.left = Math.random() * 100 + "vw";
 
     heart.style.animationDuration =
         (5 + Math.random() * 5) + "s";
@@ -602,9 +583,7 @@ function createHeart() {
     document.body.appendChild(heart);
 
     setTimeout(() => {
-
         heart.remove();
-
     }, 10000);
 
 }
