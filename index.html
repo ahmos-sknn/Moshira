@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -24,7 +23,7 @@ button:hover{transform:scale(1.05);background:#ffe2eb}
 .piece.selected{outline:4px solid #ffe1a8;outline-offset:-4px;opacity:.65}
 #puzzleFeedback{display:none;margin:20px auto}
 #puzzleStatus{font-size:21px;font-weight:bold;line-height:2;color:#fff2b5;text-shadow:0 2px 8px rgba(0,0,0,.3)}
-#surpriseButton{display:none;margin:22px auto;background:#ff1744;color:white;font-size:20px;padding:16px 30px;border-radius:30px;box-shadow:0 5px 20px rgba(255,0,50,.5);animation:pulse 1.5s infinite}
+#surpriseButton{display:inline-block;margin:22px auto;background:#ff1744;color:white;font-size:20px;padding:16px 30px;border-radius:30px;box-shadow:0 5px 20px rgba(255,0,50,.5);animation:pulse 1.5s infinite;cursor:pointer}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 #finalMessage{font-size:20px;line-height:2.2;margin-top:20px;white-space:pre-line}
 #musicFallback{background:#ffe2eb;color:#702044}
@@ -84,6 +83,7 @@ const music=document.getElementById("music");
 let storyTimer=null;
 let autoEndingTimer=null;
 let endingMessageTimer=null;
+let currentPieces = []; // مصفوفة لتتبع أماكن القطع بوضوح تםاً
 
 function checkPassword(){
 const enteredPassword=document.getElementById("password").value;
@@ -136,24 +136,33 @@ let endingShown=false;
 function showPuzzle(){
 document.getElementById("nextButton").style.display="none";
 document.getElementById("puzzleSection").style.display="block";
-document.getElementById("puzzleFeedback").style.display="none";
+document.getElementById("puzzleFeedback").style.display="block";
 document.getElementById("surpriseButton").style.display="none";
 document.getElementById("ending").style.display="none";
 createPuzzle();
 document.getElementById("puzzleSection").scrollIntoView({behavior:"smooth",block:"center"});
 }
 
-function createPuzzle(){
-const puzzle=document.getElementById("puzzle");
-puzzle.innerHTML="";
-let pieces=[0,1,2,3,4,5,6,7,8];
-
-do{
-for(let i=pieces.length-1;i>0;i--){
-const j=Math.floor(Math.random()*(i+1));
-[pieces[i],pieces[j]]=[pieces[j],pieces[i]];
+function countInversions(arr) {
+let inversions = 0;
+for (let i = 0; i < arr.length - 1; i++) {
+for (let j = i + 1; j < arr.length; j++) {
+if (arr[i] > arr[j]) inversions++;
 }
-}while(pieces.every((value,index)=>value===index));
+}
+return inversions;
+}
+
+function createPuzzle(){
+currentPieces=[0,1,2,3,4,5,6,7,8];
+
+// خلط القطع مع التأكد أنها قابلة للحل وليست مرتبة أصلاً
+do {
+for(let i=currentPieces.length-1; i>0; i--){
+const j=Math.floor(Math.random()*(i+1));
+[currentPieces[i], currentPieces[j]]=[currentPieces[j], currentPieces[i]];
+}
+} while (currentPieces.every((val, idx) => val === idx) || countInversions(currentPieces) % 2 !== 0);
 
 selectedPiece=null;
 puzzleFinished=false;
@@ -168,94 +177,79 @@ clearInterval(endingMessageTimer);
 endingMessageTimer=null;
 }
 
-pieces.forEach((pieceNumber,index)=>{
+renderPuzzle();
+document.getElementById("puzzleStatus").textContent="اختاري قطعتين لتبديل مكانهما ❤️";
+document.getElementById("surpriseButton").style.display="none";
+}
+
+function renderPuzzle(){
+const puzzle=document.getElementById("puzzle");
+puzzle.innerHTML="";
+
+currentPieces.forEach((pieceNumber,index)=>{
 const piece=document.createElement("div");
 piece.className="piece";
-piece.dataset.tile=pieceNumber;
-setPieceImage(piece,pieceNumber);
+const row=Math.floor(pieceNumber/3);
+const col=pieceNumber%3;
+piece.style.backgroundPosition=`${col*50}% ${row*50}%`;
+
+
+if(selectedPiece === index) {
+piece.classList.add("selected");
+}
+
 piece.addEventListener("click",()=>selectPiece(index));
 puzzle.appendChild(piece);
 });
-
-document.getElementById("puzzleStatus").textContent="اختاري قطعتين لتبديل مكانهما ❤️";
-}
-
-function setPieceImage(element,number){
-const row=Math.floor(number/3);
-const col=number%3;
-element.style.backgroundPosition=`${col*50}% ${row*50}%`;
 }
 
 function selectPiece(index){
 if(puzzleFinished||endingShown)return;
 
-const allPieces=document.querySelectorAll("#puzzle .piece");
-
 if(selectedPiece===null){
 selectedPiece=index;
-allPieces[index].classList.add("selected");
+renderPuzzle();
 return;
 }
 
-const first=selectedPiece;
-const second=index;
-
-if(first===second){
-allPieces[first].classList.remove("selected");
+if(selectedPiece===index){
 selectedPiece=null;
+renderPuzzle();
 return;
 }
 
-const firstTile=allPieces[first].dataset.tile;
-const secondTile=allPieces[second].dataset.tile;
+// تبديل الأماكن في المصفوفة
+let temp=currentPieces[selectedPiece];
+currentPieces[selectedPiece]=currentPieces[index];
+currentPieces[index]=temp;
 
-allPieces[first].dataset.tile=secondTile;
-allPieces[second].dataset.tile=firstTile;
-
-setPieceImage(allPieces[first],Number(secondTile));
-setPieceImage(allPieces[second],Number(firstTile));
-
-allPieces[first].classList.remove("selected");
-allPieces[second].classList.remove("selected");
 selectedPiece=null;
-
+renderPuzzle();
 checkPuzzleSolved();
 }
 
 function checkPuzzleSolved(){
-const allPieces=document.querySelectorAll("#puzzle .piece");
-if(allPieces.length!==9)return;
+const solved=currentPieces.every((val, idx) => val === idx);
 
-const solved=Array.from(allPieces).every((piece,index)=>{
-return Number(piece.dataset.tile)===index;
-});
-
-/* سطر الاختبار: يعرض ترتيب القطع بعد كل تبديل */
-document.getElementById("puzzleStatus").textContent=
-"حالة اللغز: "+Array.from(allPieces).map(p=>p.dataset.tile).join(",");
-
-if(!solved||puzzleFinished||endingShown)return;
+if(!solved || puzzleFinished || endingShown) return;
 
 puzzleFinished=true;
 
-const feedback=document.getElementById("puzzleFeedback");
 const status=document.getElementById("puzzleStatus");
 const button=document.getElementById("surpriseButton");
 
-feedback.style.display="block";
 status.textContent="برافو يا مشيرة! عرفتي تحليها ❤️";
-status.style.display="block";
-button.style.display="block";
+button.style.display="inline-block";
 
-feedback.scrollIntoView({behavior:"smooth",block:"center"});
+document.getElementById("puzzleFeedback").scrollIntoView({behavior:"smooth",block:"center"});
 
 autoEndingTimer=setTimeout(()=>{
 showEndingWithHearts();
-},3000);
+},4000);
 }
 
 function showEndingWithHearts(){
-if(endingShown||!puzzleFinished)return;
+if(endingShown)return;
 endingShown=true;
 
 if(autoEndingTimer){
@@ -263,7 +257,6 @@ clearTimeout(autoEndingTimer);
 autoEndingTimer=null;
 }
 
-document.getElementById("surpriseButton").style.display="none";
 document.getElementById("puzzleFeedback").style.display="none";
 document.getElementById("puzzleSection").style.display="none";
 
@@ -297,20 +290,6 @@ heart.style.setProperty("--rotation",(Math.random()*180-90)+"deg");
 burst.appendChild(heart);
 }
 
-for(let i=0;i<8;i++){
-const heart=document.createElement("div");
-heart.className="burst-heart";
-heart.textContent="❤️";
-const x=(Math.random()-.5)*window.innerWidth*.8;
-const y=(Math.random()-.5)*window.innerHeight*.8;
-heart.style.setProperty("--x",x+"px");
-heart.style.setProperty("--y",y+"px");
-heart.style.setProperty("--size",(75+Math.random()*55)+"px");
-heart.style.setProperty("--delay",".05s");
-heart.style.setProperty("--rotation","20deg");
-burst.appendChild(heart);
-}
-
 setTimeout(()=>{
 burst.style.display="none";
 burst.innerHTML="";
@@ -321,9 +300,6 @@ function showEnding(){
 const ending=document.getElementById("ending");
 const photo=document.getElementById("couplePhoto");
 const target=document.getElementById("finalMessage");
-
-document.getElementById("puzzleSection").style.display="none";
-document.getElementById("puzzleFeedback").style.display="none";
 
 ending.style.display="block";
 ending.style.animation="none";
