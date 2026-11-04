@@ -136,7 +136,6 @@ button:hover {
     opacity: 0.65;
 }
 
-/* منطقة رسالة التهنئة والزر */
 #puzzleFeedback {
     display: none;
     margin: 20px auto;
@@ -296,7 +295,7 @@ button:hover {
 
     </div>
 
-    <!-- رسالة التهنئة والزر خارج قسم اللغز -->
+    <!-- رسالة التهنئة والزر -->
     <div id="puzzleFeedback">
 
         <p id="puzzleStatus">
@@ -351,6 +350,7 @@ let storyTimer = null;
 let autoEndingTimer = null;
 let endingMessageTimer = null;
 
+// الدخول
 function checkPassword() {
     const enteredPassword =
         document.getElementById("password").value;
@@ -384,7 +384,6 @@ const storyText =
 
 بس فيه أشخاص وجودهم بيخلّي التفاصيل الصغيرة لها معنى تاني.
 ومهما حاولت أوصفلك، هتفضل الكلمات أقل من اللي جوايا.
-
 أنا مبسوط إنك بقيتي جزء من حكايتي يا مشيرة ❤️`;
 
 function startStory() {
@@ -408,7 +407,6 @@ function startStory() {
 }
 
 // حالة اللعبة
-let pieces = [];
 let selectedPiece = null;
 let puzzleFinished = false;
 let endingShown = false;
@@ -417,7 +415,6 @@ let endingShown = false;
 function showPuzzle() {
     document.getElementById("nextButton").style.display = "none";
     document.getElementById("puzzleSection").style.display = "block";
-
     document.getElementById("puzzleFeedback").style.display = "none";
     document.getElementById("surpriseButton").style.display = "none";
     document.getElementById("ending").style.display = "none";
@@ -436,7 +433,7 @@ function createPuzzle() {
 
     puzzle.innerHTML = "";
 
-    pieces = [0,1,2,3,4,5,6,7,8];
+    let pieces = [0,1,2,3,4,5,6,7,8];
 
     // خلط القطع
     do {
@@ -503,34 +500,42 @@ function selectPiece(index) {
     const first = selectedPiece;
     const second = index;
 
-    [pieces[first], pieces[second]] =
-        [pieces[second], pieces[first]];
+    // الضغط على نفس القطعة يلغي الاختيار
+    if (first === second) {
+        allPieces[first].classList.remove("selected");
+        selectedPiece = null;
+        return;
+    }
+
+    // تبديل بيانات القطعتين
+    const firstTile = allPieces[first].dataset.tile;
+    const secondTile = allPieces[second].dataset.tile;
+
+    allPieces[first].dataset.tile = secondTile;
+    allPieces[second].dataset.tile = firstTile;
+
+    // تحديث صور القطع
+    setPieceImage(allPieces[first], Number(secondTile));
+    setPieceImage(allPieces[second], Number(firstTile));
+
+    allPieces[first].classList.remove("selected");
+    allPieces[second].classList.remove("selected");
 
     selectedPiece = null;
 
-    updatePuzzle();
+    // فحص الحل بعد كل تبديل
     checkPuzzleSolved();
 }
 
-// تحديث اللعبة
-function updatePuzzle() {
+// فحص الحل اعتمادًا على ترتيب القطع الظاهر
+function checkPuzzleSolved() {
     const allPieces = document.querySelectorAll("#puzzle .piece");
 
-    allPieces.forEach((piece, index) => {
-        piece.classList.remove("selected");
+    if (allPieces.length !== 9) return;
 
-        const number = pieces[index];
-
-        piece.dataset.tile = number;
-        setPieceImage(piece, number);
+    const solved = Array.from(allPieces).every((piece, index) => {
+        return Number(piece.dataset.tile) === index;
     });
-}
-
-// التأكد من الحل
-function checkPuzzleSolved() {
-    const solved = pieces.every(
-        (number, index) => number === index
-    );
 
     if (!solved || puzzleFinished || endingShown) return;
 
@@ -540,14 +545,12 @@ function checkPuzzleSolved() {
     const status = document.getElementById("puzzleStatus");
     const button = document.getElementById("surpriseButton");
 
-    // إظهار التهنئة والزر في منطقة مستقلة
     feedback.style.display = "block";
 
     status.textContent =
         "برافو يا مشيرة! عرفتي تحليها ❤️";
 
     status.style.display = "block";
-
     button.style.display = "block";
 
     feedback.scrollIntoView({
@@ -555,10 +558,10 @@ function checkPuzzleSolved() {
         block: "center"
     });
 
-    // فتح المفاجأة تلقائيًا بعد 2.5 ثانية
+    // فتح المفاجأة تلقائيًا بعد 3 ثوانٍ
     autoEndingTimer = setTimeout(() => {
         showEndingWithHearts();
-    }, 2500);
+    }, 3000);
 }
 
 // إظهار المفاجأة والقلوب
